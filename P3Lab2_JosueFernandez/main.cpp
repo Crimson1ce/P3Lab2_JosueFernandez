@@ -14,9 +14,9 @@ int menu();
 
 void aritmetica(int);
 
-long double taylor(double);
+double taylor(double);
 double potencia(double,int);
-unsigned long long int factorial(int);
+double factorial(int);
 
 void triangulo(int[],int,int);
 
@@ -155,15 +155,17 @@ void aritmetica(int numero){
  * Función que calcula el resultado de la función exponencial para un valor 
  * dado.
  */
-long double taylor(double valorX){
+double taylor(double valorX){
     double resultado=0.0;
     
     /*
      * 20 es el valor máximo con que pude hacer que el factorial funcionara sin  
      * resultar en una incoherencia.
      */
-    for(int n=0; n<=20; n++){
-        resultado += ( potencia((long double)valorX, n) / factorial(n) );
+    for(int n=0; n<=40; n++){
+        double numerador = potencia(valorX, n);
+        double denominador = factorial(n);
+        resultado += ( numerador / denominador );
     } 
     
     return resultado;
@@ -176,13 +178,13 @@ long double taylor(double valorX){
 double potencia(double numero,int exponente){
     if(exponente==0)
         return 1.0;
-    return numero*potencia(numero,exponente-1);
+    return ((double)numero)*potencia(numero,exponente-1);
 }
 
 /*
  * Función recursiva que retorna el factorial de un entero no negativo.
  */
-unsigned long long int factorial(int numero){
+double factorial(int numero){
     if(numero==0)
         return 1;
     return (unsigned long long int)numero*factorial(numero-1);
