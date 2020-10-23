@@ -14,7 +14,7 @@ int menu();
 
 void aritmetica(int);
 
-long double taylor(int);
+long double taylor(double);
 double potencia(double,int);
 unsigned long long int factorial(int);
 
@@ -28,7 +28,8 @@ int main(int argc, char** argv) {
 //    cout << "El factorial de " << x << " es " << factorial(x);
     
     int opcion=0;
-    int valorX=0;
+    int numero=0, limite=0;
+    double valorX=0.0;
     
     while (opcion != 4) {
         switch (opcion = menu()) {
@@ -36,14 +37,18 @@ int main(int argc, char** argv) {
             {
                 cout << "Teorema Fundamental de la Aritmetica." << endl
                         << "Este consiste en expresar un número mayor a 1 como un producto de potencias primas." 
-                        << endl << endl << "Ingrese un número mayor a 1: ";
-                cin >> valorX;
+                        << endl << endl << "Ingrese un numero mayor a 1: ";
+                cin >> numero;
                 
                 //Validar
+                while(numero<=1){
+                    cout << "    Debe ingresar un numero mayor a 1. Ingrese x: ";
+                    cin >> numero;
+                }
                 
                 cout << endl << "    La factorizacion del numero es: " << endl;
                 
-                aritmetica(valorX);
+                aritmetica(numero);
                 
                 break;
             }
@@ -54,14 +59,28 @@ int main(int argc, char** argv) {
                         << "Ingrese el valor de x: ";
                 cin >> valorX;
                 
-                //Validar
-                
                 cout << endl << "    El resultado del calculo es: " << taylor(valorX) << endl;
                 
                 break;
             }
             case 3: // Triángulo de Pascal
             {
+                
+                cout << "Triangulo de Pascal." << endl
+                        << "Ingrese el limite de las filas a imprimir: ";
+                cin >> limite;
+                
+                //Validar
+                while(limite<=0){
+                    cout << "    Debe ingresar un numero mayor a 0. Ingrese x: ";
+                    cin >> limite;
+                }
+                
+                cout << endl;
+                
+                int fila[] = {1};
+                triangulo(fila,1,limite);
+                
                 break;
             }
             case 4:
@@ -136,7 +155,7 @@ void aritmetica(int numero){
  * Función que calcula el resultado de la función exponencial para un valor 
  * dado.
  */
-long double taylor(int valorX){
+long double taylor(double valorX){
     double resultado=0.0;
     
     /*
@@ -170,15 +189,27 @@ unsigned long long int factorial(int numero){
 }
 
 /*
- * Método que imprime el triángulo de Pascal hasta la fila provista.
+ * Método recursivo que imprime el triángulo de Pascal hasta la fila provista.
  * 
  * triangulo( {1} , 1 , 10 );
  * 
  */
-void triangulo(int filas[], int size, int total){
+void triangulo(int fila[], int size, int total){
     
-    for(int i=0; i<size; i++){
-        
+    for(int i=0; i<size-1;i++)
+        cout << fila[i] << ",";
+    cout << fila[size-1] << endl;
+    
+    int nuevaFila[size+1] = {};
+    
+    nuevaFila[0] = 1;
+    for(int i=1; i<size; i++){
+        nuevaFila[i] = fila[i-1] + fila[i];
     }
+    nuevaFila[size] = 1;
     
+    
+    if (size<total)
+        triangulo(nuevaFila,size+1,total);   
 }
+
